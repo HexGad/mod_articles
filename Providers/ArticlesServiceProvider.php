@@ -63,8 +63,8 @@ class ArticlesServiceProvider extends ServiceProvider
     protected function registerAssets()
     {
         $this->publishes([
-            module_path($this->moduleName, 'dist/build-articles') => public_path(),
-        ], $this->moduleNameLower . '-module-assets');
+            module_path($this->moduleName, 'dist/build-articles') => public_path('build-articles'),
+        ], 'modules-assets');
     }
 
     /**
