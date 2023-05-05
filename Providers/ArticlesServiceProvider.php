@@ -64,7 +64,7 @@ class ArticlesServiceProvider extends ServiceProvider
     {
         $this->publishes([
             module_path($this->moduleName, 'dist/build-articles') => public_path(),
-        ], 'assets');
+        ], $this->moduleNameLower . '-module-assets');
     }
 
     /**
