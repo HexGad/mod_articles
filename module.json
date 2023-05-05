@@ -1,0 +1,11 @@
+{
+    "name": "Articles",
+    "alias": "articles",
+    "description": "",
+    "keywords": [],
+    "priority": 10,
+    "providers": [
+        "HexGad\\Articles\\Providers\\ArticlesServiceProvider"
+    ],
+    "files": []
+}
