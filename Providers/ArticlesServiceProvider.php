@@ -27,6 +27,7 @@ class ArticlesServiceProvider extends ServiceProvider
         $this->registerTranslations();
         $this->registerConfig();
         $this->registerViews();
+        $this->registerAssets();
         $this->loadMigrationsFrom(module_path($this->moduleName, 'database/migrations'));
     }
 
@@ -53,6 +54,17 @@ class ArticlesServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(
             module_path($this->moduleName, 'config/config.php'), $this->moduleNameLower
         );
+    }
+    /**
+     * Register assets files.
+     *
+     * @return void
+     */
+    protected function registerAssets()
+    {
+        $this->publishes([
+            module_path($this->moduleName, 'dist/build-articles') => public_path(),
+        ], 'assets');
     }
 
     /**
