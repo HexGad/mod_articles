@@ -60,6 +60,7 @@ class ArticlesDataTable extends DataTable
     {
         return [
             Column::make('id')->className('text-start text-muted fw-bold fs-7 text-uppercase gs-0 fw-bolder'),
+            Column::make('title')->className('text-start text-muted fw-bold fs-7 text-uppercase gs-0 fw-bolder'),
         ];
     }
 

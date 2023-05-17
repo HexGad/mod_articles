@@ -3,7 +3,7 @@
     "alias": "articles",
     "description": "",
     "keywords": [],
-    "priority": 10,
+    "priority": 12,
     "providers": [
         "HexGad\\Articles\\Providers\\ArticlesServiceProvider"
     ],

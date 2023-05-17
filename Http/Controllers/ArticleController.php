@@ -50,8 +50,10 @@ class ArticleController extends Controller
      */
     public function store(StoreArticlesRequest $request): JsonResponse
     {
-        if($article = Article::create($request->validated()))
+        if($article = Article::create($request->validated())){
+
             return response()->json($article);
+        }
 
         throw new ApiException;
     }
