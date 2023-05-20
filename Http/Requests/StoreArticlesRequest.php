@@ -18,7 +18,6 @@ class StoreArticlesRequest extends FormRequest
             'slug' => ['required'],
             'image' => ['required', 'image'],
             'content' => ['required'],
-            'user_id' => ['required'],
             'category_id' => ['nullable'],
             'form_id' => ['nullable'],
             'pixel_id' => ['nullable'],

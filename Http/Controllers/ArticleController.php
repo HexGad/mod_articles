@@ -50,8 +50,11 @@ class ArticleController extends Controller
      */
     public function store(StoreArticlesRequest $request): JsonResponse
     {
-        if($article = Article::create($request->validated())){
+        $data = $request->validated();
+        $data['user_id'] = auth()->id();
 
+        if($article = Article::create($data)){
+            $article->addMedia($request->file('image'))->toMediaCollection('articles');
             return response()->json($article);
         }
 

@@ -21,7 +21,26 @@ class ArticlesDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->setRowId('id');
+            ->setRowId('id')
+            ->rawColumns(['title'])
+            ->editColumn('title', function (Article $article){
+                $image = $article->getFirstMediaUrl('articles');
+                return '
+                <span>
+                    <div class="d-flex align-items-center">
+                        <div class="symbol symbol-circle symbol-50px overflow-hidden me-3">
+                            <div class="symbol-label">
+                                    <img src="'.$image.'" alt="Emma Smith" class="w-100">
+                            </div>
+                        </div>
+                        <div class="d-flex flex-column">
+                            <p class="text-start fw-bolder text-muted fs-7 text-uppercase gs-0 lh-1">'. $article->title.'</p>
+                            <p class="text-start fw-bolder text-muted fs-7 gs-0 lh-1">'. strip_tags($article->content) .'</p>
+                        </div>
+                    </div>
+                </span>
+                ';
+            });
     }
 
     /**

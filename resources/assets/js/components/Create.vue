@@ -66,8 +66,8 @@
       <div class="row mt-3 mb-3">
         <div class="col">
           <label class="form-label required mb-0">Cover Image</label>
-          <input type="file" class="form-control form-control-solid">
-          <small class="text-danger" v-if="errors.content">{{errors.content[0]}}</small>
+          <input type="file" class="form-control form-control-solid" @change="handleFileChange">
+          <small class="text-danger" v-if="errors.image">{{errors.image[0]}}</small>
         </div>
       </div>
 
@@ -109,6 +109,7 @@ export default {
     article:{
       title: null,
       slug: null,
+      image: null,
       category_id: null,
       form_id: null,
       pixel_id: null,
@@ -117,6 +118,7 @@ export default {
     errors:{
       title: null,
       slug: null,
+      image: null,
       category_id: null,
       form_id: null,
       pixel_id: null,
@@ -125,11 +127,20 @@ export default {
   }),
 
   methods:{
+    handleFileChange(event) {
+      this.article.image = event.target.files[0];
+    },
     async createArticle(){
       this.is_loading = true;
       this.errors = {name: null};
 
-      await axios.post(route('dashboard.articles.store'), this.article).then((res) => {
+      const headers = { 'Content-Type': 'multipart/form-data' };
+      const formData = new FormData();
+      for (const key in this.article)
+        if(this.article[key] !== null)
+          formData.append(key, this.article[key]);
+
+      await axios.post(route('dashboard.articles.store'), formData, {headers}).then((res) => {
         window.location.href = route('dashboard.articles.index')
       }).catch((err) => {
         if (err.response && err.response.status === 422)
