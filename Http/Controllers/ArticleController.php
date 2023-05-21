@@ -10,6 +10,7 @@ use App\Exceptions\ApiException;
 
 use HexGad\Categories\Models\Category;
 use HexGad\Forms\Models\Form;
+use HexGad\Media\Models\Media;
 use HexGad\Pixels\Models\Pixel;
 use Illuminate\Routing\Controller;
 use Illuminate\Contracts\Support\Renderable;
@@ -86,6 +87,7 @@ class ArticleController extends Controller
         $forms = Form::pluck('title', 'id');
         $pixels = Pixel::pluck('name', 'id');
 
+        $article->load('media');
         return view('articles::edit', compact('article', 'categories', 'forms', 'pixels'));
     }
 
@@ -100,8 +102,11 @@ class ArticleController extends Controller
      */
     public function update(UpdateArticlesRequest $request, Article $article): JsonResponse
     {
-        if($article->update($request->validated()))
+        if($article->update($request->validated())){
+            $article->media->each(fn(Media $media) => $media->delete());
+            $article->addMedia($request->file('image'))->toMediaCollection('articles');
             return response()->json($article);
+        }
 
         throw new ApiException;
     }

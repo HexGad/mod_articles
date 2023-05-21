@@ -127,12 +127,16 @@ export default {
   }),
 
   methods:{
-    handleFileChange(event) {
+    handleFileChange(event){
       this.article.image = event.target.files[0];
     },
     async createArticle(){
       this.is_loading = true;
-      this.errors = {name: null};
+      this.errors = {
+        title: null, slug: null, image: null,
+        category_id: null, form_id: null, pixel_id: null,
+        content: null,
+      };
 
       const headers = { 'Content-Type': 'multipart/form-data' };
       const formData = new FormData();

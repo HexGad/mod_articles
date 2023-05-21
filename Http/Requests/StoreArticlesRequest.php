@@ -3,6 +3,7 @@
 namespace HexGad\Articles\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreArticlesRequest extends FormRequest
 {
@@ -14,8 +15,8 @@ class StoreArticlesRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => ['required'],
-            'slug' => ['required'],
+            'title' => ['required', Rule::unique('articles', 'title')],
+            'slug' => ['required', Rule::unique('articles', 'slug')],
             'image' => ['required', 'image'],
             'content' => ['required'],
             'category_id' => ['nullable'],
